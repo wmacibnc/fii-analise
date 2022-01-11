@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <main>
+      <div class="jumbotron">
+        <h1>
+          <%= title %>
+        </h1>
+        <p>Fundos Imobiliários</p>
+      </div>
+      <p>Bem vindo(a) ao <strong><%= title %></strong> </p>
+
+      <div onclick="atualizar()" class="alert alert-danger" role="alert">
+        Atualizar os dados do dia.
+      </div>
+        
+        <p>Clique na data para obter o relatório do dia.</p>
+        <% dados.map(dado => { %>
+          <div id="valor" onclick="abrir('<%= dado %>')" class="alert alert-info" role="alert">
+            <%= dado %>
+          </div>    
+        <% }); %>
+      </main>
+        </div>
+    <footer>
+      <div class="container">
+        <p>Versão <%= version %></p>
+      </div>
+    </footer>
+  </body>
+  <script>
+   const abrir = function(arquivo) {
+      var data = arquivo.replace("relatorio-","").replace(".json","");
+      var url = "dados?data=" + data;
+      window.location.href = url;
+    }
+    const atualizar = function() {
+      var url = "atualizar";
+      window.location.href = url;
+    }
+  </script>
+</html>
