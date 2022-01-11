@@ -84,6 +84,11 @@ async function scrapeAll(browserInstance) {
                 "tipo": "Tijolo",
             },
             {
+                "browserInstance": browserInstance,
+                "fundo": "IRDM11",
+                "tipo": "Papel",
+            },
+            {
                 "browserInstance": browserInstance, 
                 "fundo": "KISU11",
                 "tipo": "Fundo de Fundos",

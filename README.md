@@ -40,6 +40,7 @@ HGLG11 | Tijolo |
 HGRE11 | Tijolo |
 HGRU11 | Tijolo |
 HSML11 | Tijolo |
+IRDM11 | Papel |
 KISU11 | Fundo de Fundos |
 KNRI11 | Tijolo |
 KNSC11 | Papel |
