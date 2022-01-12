@@ -5,7 +5,6 @@ const path = require('path');
 const fs = require('fs')
 const http = require('http')
 
-
 const home = require('./home');
 const relatorio = require('./relatorio');
 const atualizar = require('./atualizar');
