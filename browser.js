@@ -6,8 +6,7 @@ async function startBrowser(){
         console.log("Abrindo o navegador......");
         browser = await puppeteer.launch({
             headless: false,
-            executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-            args: ["--disable-setuid-sandbox"],
+            args: ["--no-sandbox"],
             'ignoreHTTPSErrors': true
         });
     } catch (err) {
