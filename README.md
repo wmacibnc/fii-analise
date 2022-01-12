@@ -54,6 +54,7 @@ RBRR11 | Papel |
 RECR11 | Papel |
 RRCI11 | Papel |
 TORD11 | Híbrido |
+TRXF11 | Tijolo |
 VGIP11 | Papel |
 VILG11 | Tijolo |
 VISC11 | Tijolo |
