@@ -6,8 +6,11 @@ async function startBrowser(){
         console.log("Abrindo o navegador......");
         browser = await puppeteer.launch({
             headless: false,
-            args: ["--no-sandbox"],
-            'ignoreHTTPSErrors': true
+            args : [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+              ],
+            ignoreHTTPSErrors: true
         });
     } catch (err) {
         console.log("Erro ao criar a instância do navegador => : ", err);
