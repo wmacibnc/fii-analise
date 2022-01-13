@@ -4,6 +4,9 @@ const scraperController = require('./pageController');
 const express = require('express');
 const router = express.Router();
 
+const fs = require('fs');
+const path = require('path');
+
 router.get('/', async function (req, res, next) {
     const data = new Date();
     let dataFormatada = (data.getFullYear() + "-" + (adicionaZero(data.getMonth() + 1)) + "-" + (adicionaZero(data.getDate())));
@@ -13,8 +16,6 @@ router.get('/', async function (req, res, next) {
         Data: dataFormatada
     });
 
-    const fs = require('fs');
-    const path = require('path');
 
     //Inicia o navegador e cria uma nova instância
     let browserInstance = await browserObject.startBrowser();

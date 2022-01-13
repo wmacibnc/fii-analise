@@ -3,12 +3,9 @@ const puppeteer = require('puppeteer');
 async function startBrowser(){
     let browser;
     try {
-        console.log('CODIGO DA DEVELOP');
-        console.log('CODIGO DA DEVELOP');
-        console.log('CODIGO DA DEVELOP');
-        console.log("Abrindo o navegador......");
         browser = await puppeteer.launch({
             headless: true,
+            executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
             'args' : [
                 '--no-sandbox',
                 '--disable-setuid-sandbox'

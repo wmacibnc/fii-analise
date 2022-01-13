@@ -8,6 +8,7 @@ const http = require('http')
 const home = require('./home');
 const relatorio = require('./relatorio');
 const atualizar = require('./atualizar');
+const schedule = require('./schedule');
 
 
 // Setup view engine
@@ -15,6 +16,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 let dados = [];
+
+schedule.job();
 
 fs.readdir('./arquivos', (err, paths) => {
     console.log(paths);
@@ -43,9 +46,7 @@ app.get('/dados', async function(req, res, next) {
         requireTLC: false,
     }
       
-      const requisicao = await http.request(options, resposta => {
-        console.log(`statusCode: ${resposta.statusCode}`)
-      
+      const requisicao = await http.request(options, resposta => {      
         resposta.on('data', async d => {
           let relatorio = JSON.parse(d);
 

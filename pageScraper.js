@@ -1,14 +1,14 @@
 const scraperObject = {
-    
+
     async scraper(browserInstance, url, tipo) {
- // Criando instância do navegador
- const browser = await browserInstance;
+        // Criando instância do navegador
+        const browser = await browserInstance;
 
- // Criando uma nova página
- let page = await browser.newPage();
+        // Criando uma nova página
+        let page = await browser.newPage();
 
- // Definindo que a requisição não tem timeout
- await page.setDefaultNavigationTimeout(0);
+        // Definindo que a requisição não tem timeout
+        await page.setDefaultNavigationTimeout(0);
 
         console.log(`Abrindo url ${url}...`);
         await page.goto(url);
@@ -30,7 +30,7 @@ const scraperObject = {
             'ultimoRendimento': ultimoRendimento,
             'dividendoYield': dividendoYield,
             'pvp': pvp,
-            'valorCota':valorCota 
+            'valorCota': valorCota
         }
 
     }
