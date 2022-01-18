@@ -26,6 +26,10 @@
       <div onclick="atualizar()" class="alert alert-danger" role="alert">
         Atualizar os dados do dia.
       </div>
+
+      <div onclick="fundos()" class="alert alert-success" role="alert">
+        Listar todos os Fundos.
+      </div>
         
         <p>Clique na data para obter o relatório do dia.</p>
         <% dados.map(dado => { %>
@@ -49,6 +53,10 @@
     }
     const atualizar = function() {
       var url = "atualizar";
+      window.location.href = url;
+    }
+    const fundos = function() {
+      var url = "fundos";
       window.location.href = url;
     }
   </script>
