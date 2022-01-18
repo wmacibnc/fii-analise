@@ -1,182 +1,43 @@
-const fs = require('fs');
-const path = require('path');
 const browserObject = require('./browser');
 
+const db = require("./db");
+
+const horaSleep = 6;
 const urlBase = 'https://www.fundsexplorer.com.br/funds/';
 
 async function job() {
     while (true) {
+        const fundoRef = db.collection('fundo');
+        const retorno = await fundoRef.get();
+        let fundos = [];
+        retorno.forEach(doc => {
+            fundos.push(doc.data());
+          });
 
-        const fundos = [
-            {
-                "fundo": "ALZR11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "BCRI11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "BRCO11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "BRCR11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "BTLG11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "CORM11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "CPTS11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "CVBI11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "DEVA11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "GGRC11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "HCTR11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "HGBS11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "HGLG11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "HGRE11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "HGRU11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "HSML11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "IRDM11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "KISU11",
-                "tipo": "Fundo de Fundos",
-            },
-            {
-                "fundo": "KNRI11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "KNSC11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "LGCP11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "MALL11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "MCCI11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "MXRF11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "RBRF11",
-                "tipo": "Fundo de Fundos",
-            },
-            {
-                "fundo": "RBRP11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "RBRR11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "RECR11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "RRCI11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "TORD11",
-                "tipo": "Híbrido",
-            },
-            {
-                "fundo": "TRXF11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "VGIP11",
-                "tipo": "Papel",
-            },
-            {
-                "fundo": "VILG11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "VISC11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "VSLH11",
-                "tipo": "Híbrido",
-            },
-            {
-                "fundo": "XPLG11",
-                "tipo": "Tijolo",
-            },
-            {
-                "fundo": "XPML11",
-                "tipo": "Tijolo",
-            }
-        ];
         let dados = [];
-        for (let dado in fundos) {
+        for(fundo of fundos){
             let inicio = new Date();
-            let retorno = await scraper(urlBase + fundos[dado].fundo, fundos[dado].tipo);
-            console.log('Sincronizado em : ' + (new Date().getTime() - inicio.getTime()) + ' ms - ' + retorno.fundo);
+            let retorno = await scraper(urlBase + fundo.fundo, fundo.tipo);
+            console.log(new Date() + ' Sincronizado em : ' + (new Date().getTime() - inicio.getTime()) + ' ms - ' + retorno.fundo);
             dados.push(retorno);
-        }
-
-        console.log("DADOS:" + JSON.stringify(dados));
-
-        let folderPath = "arquivos";
-        if (!fs.existsSync(folderPath)) {
-            fs.mkdirSync(folderPath)
         }
 
         const data = new Date();
         let dataFormatada = (data.getFullYear() + "-" + (adicionaZero(data.getMonth() + 1)) + "-" + (adicionaZero(data.getDate())));
+       const obj = {
+           'dados': dados
+       }
+        try {
+            await 
+                db
+                    .collection('dado')
+                    .doc(dataFormatada)
+                    .set(obj,{ merge: true });
+          } catch (error) {
+            console.log(error);
+          }
 
-        fs.writeFileSync(path.join(__dirname, folderPath, "relatorio-" + dataFormatada + ".json"), JSON.stringify(dados), "UTF8");
-        await sleep(12 * 36 * 100000);
+        await sleep(horaSleep * (60 * 60000));
     }
 }
 
@@ -185,8 +46,6 @@ function sleep(ms) {
         setTimeout(resolve, ms);
     });
 }
-
-
 
 
 async function scraper(url, tipo) {

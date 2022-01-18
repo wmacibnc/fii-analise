@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div class="container">
+    <main>
+      <div class="jumbotron">
+        <h1>
+          <%= title %>
+        </h1>
+        <p>Fundos Imobiliários</p>
+      </div>
+
+     <table border="1" class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Fundo</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% fundos.map(dado=> { %>
+              <tr>
+                  <td>
+                    <%= dado.fundo %>
+                  </td>
+                  <td>
+                    <%= dado.tipo %>
+                  </td>
+                  <td>
+                    <%= dado.id %>
+                  </td>
+              </tr>
+              <% }); %>
+        </tbody>
+      </table>
+
+      <form action="/fundos" method="post" class="form-signin">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" name="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <label for="name">Message</label>
+          <textarea type="text" class="form-control" name="message" placeholder="Enter message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <form action="/fundos" method="POST" id="form">
+        <div class="mb-3">
+          <label for="example1" class="form-label">Fundo: </label>
+          <input type="text" name="fundo" class="form-control" aria-describedby="help1">
+        </div>
+        <div class="mb-3">
+          <label for="example2" class="form-label">Tipo: </label>
+          <input type="text" name="tipo" class="form-control" id="example2">
+        </div>
+      <input type="submit" value="Save"/>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </form>
+
+
+    </main>
+  </div>
+  <footer>
+    <div class="container">
+      <p>Desenvolvido por wmacibnc </p>
+    </div>
+  </footer>
+</body>
+<script>
+ 
+</script>
+</html>

@@ -1,26 +1,23 @@
-const { readFile } = require('fs')
-
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-    const query = req.query;
+const db = require("./db");
+
+router.get('/', async function (req, res, next) {
+    const filtro = req.query;
     let titulo = null;
-    if (isNotEmpty(query)) {
-        titulo = 'Relatório do dia: ' + query.data;
+    if (isNotEmpty(filtro)) {
+        titulo = 'Relatório do dia: ' + filtro.data;
 
-        readFile(__dirname + '/arquivos/relatorio-' + query.data + ".json", (err, data) => {
-            if (err){
-                res.status(200).send({
-                    mensagem: "Período não localizado!"
-                });
-                return;     
-            };
+        let query = db.collection('dado').doc(filtro.data);
 
-            res
-                .set({ 'Content-Type': 'text/plain' })
-                .status(200).send(data);
-        });
+        await query.get().then(querySnapshot => {
+            let docs = querySnapshot.data();
+            let data = docs != null ? docs['dados'] : [];
+        res
+            .set({ 'Content-Type': 'text/plain' })
+            .status(200).send(data);
+    });
 
     } else {
         res.status(200).send({
