@@ -22,6 +22,25 @@
         <p>Fundos Imobiliários</p>
       </div>
 
+      <h3>Adicionar novo fundo</h3>
+      <br />
+
+      <form action="/fundos" method="POST" id="form">
+        <div class="mb-3">
+          <label for="example1" class="form-label">Fundo: </label>
+          <input type="text" name="fundo" class="form-control" aria-describedby="help1">
+        </div>
+        <br />
+
+        <div class="mb-3">
+          <label for="example2" class="form-label">Tipo: </label>
+          <input type="text" name="tipo" class="form-control" id="example2">
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </form>
+
+      <h3>Fundos Imobiliários</h3>
      <table border="1" class="table table-hover">
         <thead>
           <tr>
@@ -40,38 +59,17 @@
                     <%= dado.tipo %>
                   </td>
                   <td>
-                    <%= dado.id %>
+                    <form action="/excluir" method="POST" id="form">
+                      <input type="hidden" name="id" value="<%= dado.id %>" />
+                      <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
                   </td>
               </tr>
               <% }); %>
         </tbody>
       </table>
 
-      <form action="/fundos" method="post" class="form-signin">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" class="form-control" name="email" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-          <label for="name">Message</label>
-          <textarea type="text" class="form-control" name="message" placeholder="Enter message"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-
-      <form action="/fundos" method="POST" id="form">
-        <div class="mb-3">
-          <label for="example1" class="form-label">Fundo: </label>
-          <input type="text" name="fundo" class="form-control" aria-describedby="help1">
-        </div>
-        <div class="mb-3">
-          <label for="example2" class="form-label">Tipo: </label>
-          <input type="text" name="tipo" class="form-control" id="example2">
-        </div>
-      <input type="submit" value="Save"/>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-      </form>
-
+     
 
     </main>
   </div>
