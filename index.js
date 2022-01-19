@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const porta = process.env.PORT || 3000;
 const http = require('http')
@@ -11,6 +12,8 @@ const schedule = require('./schedule');
 
 const db = require("./db");
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 // Setup view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -36,28 +39,59 @@ app.get('/', async function (req, res, next) {
   });
 });
 
-app.post('/fundos', function(req, res){
-  console.log("teste: " + JSON.stringify(req.body));
-  console.log(req.body.email);
-  console.log(req.body.tipo);
+
+app.post('/excluir', async function(req, res){
+  const id = req.body.id;
+  console.log();
+  const mensagem = await db.collection('fundo').doc(id).delete();
+
+  let fundos = await getFundos();
+  res.render('fundos', {
+    title: "Fundos ",
+    fundos: fundos,
+    mensagem: mensagem
+  });
+});
+
+app.post('/fundos', async function(req, res){
+ 
+  let obj = {
+    "fundo": req.body.fundo,
+    "tipo": req.body.tipo
+  }
+
+  await db.collection('fundo').doc().set(obj, { merge: true });
+
+  let fundos = await getFundos();
+  res.render('fundos', {
+    title: "Fundos ",
+    fundos: fundos
+  });
 });
 
 app.get('/fundos', async function (req, res, next) {
-
-  const fundoRef = db.collection('fundo');
-  const retorno = await fundoRef.get();
-  let fundos = [];
-
-  retorno.forEach(doc => {
-    fundos.push(doc.data());
-  });
+  let fundos = await getFundos();
 
   res.render('fundos', {
     title: "Fundos ",
     fundos: fundos
   });
-
+  
+  
 });
+
+async function getFundos() {
+  const fundoRef = db.collection('fundo');
+  const retorno = await fundoRef.get();
+  let fundos = [];
+
+  retorno.forEach(doc => {
+    let dado = doc.data();
+    dado.id = doc.id;
+    fundos.push(dado);
+  });
+  return fundos;
+}
 
 app.get('/dados', async function (req, res, next) {
   let data = req.query.data;
