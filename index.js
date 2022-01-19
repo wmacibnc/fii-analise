@@ -90,6 +90,7 @@ async function getFundos() {
     dado.id = doc.id;
     fundos.push(dado);
   });
+  fundos.sort((a,b) => (a.fundo > b.fundo) ? 1 : ((b.fundo > a.fundo) ? -1 : 0))
   return fundos;
 }
 
@@ -114,6 +115,7 @@ app.get('/dados', async function (req, res, next) {
         const isTipo = fii => fii.tipo === tipo;
         relatorio = await relatorio.filter(isTipo);
       }
+      relatorio.sort((a,b) => (a.fundo > b.fundo) ? 1 : ((b.fundo > a.fundo) ? -1 : 0))
 
       res.render('dados', {
         title: "Dados do dia: " + data,
