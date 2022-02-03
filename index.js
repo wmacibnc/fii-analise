@@ -29,12 +29,20 @@ app.get('/', async function (req, res, next) {
   const retorno = await dadoRef.get();
 
   retorno.forEach(doc => {
-    dados.push(doc.id);
+    let data = doc.id;
+    let objeto = {
+      'data':data,
+      'dataFormatada': formatarData(data)
+    }
+    dados.push(objeto);
   });
+
+  dados.sort((a,b) => (a.data < b.data) ? 1 : ((b.data < a.data) ? -1 : 0))
+
 
   res.render('index', {
     title: "FIIs",
-    version: "0.0.1-beta",
+    version: "0.0.2-beta",
     dados: dados
   });
 });
@@ -47,7 +55,7 @@ app.post('/excluir', async function(req, res){
 
   let fundos = await getFundos();
   res.render('fundos', {
-    title: "Fundos ",
+    title: "FIIs ",
     fundos: fundos,
     mensagem: mensagem
   });
@@ -79,6 +87,10 @@ app.get('/fundos', async function (req, res, next) {
   
   
 });
+
+function formatarData(data) {
+  return data.substring(8, 12) + "/" + data.substring(5, 7) + "/" + data.substring(0, 4);
+}
 
 async function getFundos() {
   const fundoRef = db.collection('fundo');
@@ -118,7 +130,7 @@ app.get('/dados', async function (req, res, next) {
       relatorio.sort((a,b) => (a.fundo > b.fundo) ? 1 : ((b.fundo > a.fundo) ? -1 : 0))
 
       res.render('dados', {
-        title: "Dados do dia: " + data,
+        title: "Dados do dia: " + formatarData(data),
         relatorio: relatorio,
         data: data
       });

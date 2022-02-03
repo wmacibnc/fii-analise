@@ -1,6 +1,8 @@
 # Analise de Fundos Imobiliários por Scraper
 *Repositório de Analise para FII - Fundos Imobiliários.*
 
+https://fii-analise.herokuapp.com/
+
 ## Instalação
 
 ```
@@ -14,12 +16,14 @@ npm install
 npm run debug
 ```
 
+Acesse: http://localhost:3000/
+
 ### Modo Produção
 ```
 npm run start
 ```
 
-Acesse: http://localhost:3000/
+Acesse: https://fii-analise.herokuapp.com/
 
 ### Lista de Fii - 11-01-2022
 FII | Tipo |
@@ -62,7 +66,6 @@ VSLH11 | Híbrido |
 XPLG11 | Tijolo |
 XPML11 | Tijolo |
 
-### Adicionar novos FIIs para analise, diretamente no arquivo pageController.js
 
 ## Funcionalidades
 - Tela Inicial - Botão para atualizar a situação dos FIIs na data corrente via scraper;  
@@ -72,8 +75,22 @@ XPML11 | Tijolo |
 ![Tela Atualizar](imagens/tela-atualizar.png)
 
 
-*Obs.: Não pode fechar o navegador que vai abrir.*    
-![Navegador aberto](imagens/navegador-aberto.png)
-
 - Relatório de FII por data - P/VP abaixo de 1 linha em azul, P\VP acima de 1 linha vermelha.  
 ![Relatorio](imagens/relatorio.png)
+
+
+- Cadastrar Novos Fundos para sincronização.  
+![Relatorio](imagens/tela-fundos.png)
+
+- Lista de Fundos.  
+![Relatorio](imagens/tela-fundos.png)
+
+
+## Publicação via Heroku
+- Código está na brach ´develop´
+*Depois que efetuar o commit na develop*
+
+### Commit e publicação
+```
+git push heroku HEAD:master
+```
