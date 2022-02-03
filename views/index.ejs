@@ -14,6 +14,12 @@
 
 <body>
   <div class="container">
+    
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" href="/fundos">Lista de Fundos</a>
+      <a class="navbar-brand" href="/atualizar">Sincronizar Manualmente</a>
+    </nav>
     <main>
       <div class="jumbotron">
         <h1>
@@ -21,22 +27,16 @@
         </h1>
         <p>Fundos Imobiliários</p>
       </div>
-      <p>Bem vindo(a) ao <strong><%= title %></strong> </p>
-
-      <div onclick="atualizar()" class="alert alert-danger" role="alert">
-        Atualizar os dados do dia.
-      </div>
-
-      <div onclick="fundos()" class="alert alert-success" role="alert">
-        Listar todos os Fundos.
-      </div>
-        
+      
         <p>Clique na data para obter o relatório do dia.</p>
+        <div class="row">
         <% dados.map(dado => { %>
-          <div id="valor" onclick="abrir('<%= dado %>')" class="alert alert-info" role="alert">
-            <%= dado %>
-          </div>    
-        <% }); %>
+          <button style="margin-bottom: 25px;" type="button" onclick="abrir('<%= dado.data %>')" class="btn btn-info btn-lg" role="alert">
+            <%= dado.dataFormatada %>
+            <br />
+          </button>
+          <% }); %>
+        </div>    
       </main>
         </div>
     <footer>
@@ -49,14 +49,6 @@
    const abrir = function(arquivo) {
       var data = arquivo.replace("relatorio-","").replace(".json","");
       var url = "dados?data=" + data;
-      window.location.href = url;
-    }
-    const atualizar = function() {
-      var url = "atualizar";
-      window.location.href = url;
-    }
-    const fundos = function() {
-      var url = "fundos";
       window.location.href = url;
     }
   </script>
